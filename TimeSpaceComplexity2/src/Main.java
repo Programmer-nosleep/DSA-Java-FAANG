@@ -25,7 +25,7 @@ public class Main {
 
            int i = 0;
            for (String inputNum : splitComma) {
-               customArray[i] = Integer.parseInt(splitComma[i].trim());
+               customArray[i] = Integer.parseInt(inputNum.trim());
                i++;
            }
 
