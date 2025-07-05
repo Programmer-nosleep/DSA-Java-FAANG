@@ -8,7 +8,7 @@ public class Main {
     public void reverse (int[] arr) {
         // O(n/2)
        for (int i = 0; i < arr.length / 2; i++) {
-           // techinique swapping, Time Complexity O(1)
+           // technique swapping, Time Complexity O(1)
           int other = arr.length - i - 1;
           int temp = arr[i];
           arr[i] = arr[other];
