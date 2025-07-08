@@ -43,6 +43,7 @@ public class Main {
 
             } while (pilihan == 'y' || pilihan == 'Y');
 
+            System.out.print("Menampilkan linked list berkisaran : ");
             list.display();
        } catch (IOException | NumberFormatException e) {
            throw new RuntimeException(e);
