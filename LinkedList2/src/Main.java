@@ -11,11 +11,15 @@ public class Main {
            char options = 0;
 
            do {
-               System.out.println("Menu");
-               System.out.println("1. Buat Node pertama");
-               System.out.println("2. Sisipkan node baru");
-               System.out.println("3. Tampilkan isi linked list");
-               System.out.print("Pilih mode : ");
+               System.out.println("\n--- Menu ---");
+               System.out.println("1. Buat Node Pertama");
+               System.out.println("2. Sisipkan Node Baru");
+               System.out.println("3. Cari Node Berdasarkan Nilai");
+               System.out.println("4. Tampilkan Semua Linked List");
+               System.out.println("5. Menghapus Linked List per-node");
+               System.out.println("6. Menghapus semua node");
+               System.out.println("7. Keluar");
+               System.out.print("Pilih mode: ");
 
                String[] inputParts = bufferedReader.readLine().trim().split("\\s+");
                if (inputParts.length == 0 || !inputParts[0].matches("\\d+")) {
@@ -42,9 +46,27 @@ public class Main {
                        singlyLinkedList.insert(value, location);
                        break;
                    case 3:
+                        System.out.print("Mencari sebuah lokasi node : ");
+                        int searching = Integer.parseInt(bufferedReader.readLine().trim());
+                        singlyLinkedList.searchSinglyLinkedList(searching);
+                        break;
+                   case 4:
                        System.out.print("Menampilan semua linked list : ");
                        singlyLinkedList.traverseSinglyLinkedList();
                        break;
+                   case 5:
+                       System.out.print("Mencari sebuah lokasi node yang di hapus : ");
+                       int delete = Integer.parseInt(bufferedReader.readLine().trim());
+                       singlyLinkedList.deletion(delete);
+                       break;
+                   case 6:
+                       System.out.print("Menghapus semua node.");
+                       singlyLinkedList.deleteAll();
+                       break;
+                   case 7:
+                       System.out.println("Keluar dari program");
+                       options = 'N';
+                       continue;
                    default:
                        System.out.println("invalid value.");
                        break;

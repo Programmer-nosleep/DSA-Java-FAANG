@@ -3,11 +3,11 @@ public class SinglyLinkedList {
     private Node tail; // The tail node of the singly linked list.
     private int size;  // The number of nodes in the singly linked list.
 
-    // Inner class representing a Node in the singly linked list.
-    private static class Node {
-        public int value; // The data value stored in the node.
-        public Node next;  // A reference to the next node in the list.
-    }
+
+//    private static class Node {
+//        public int value;
+//        public Node next;
+//    }
 
     /**
      * Creates a new singly linked list with a single node containing the specified value.
@@ -103,6 +103,151 @@ public class SinglyLinkedList {
         }
 
         System.out.println("\n"); // Print a newline for better formatting.
+    }
+
+    /**
+     * Searches for a specific value within the singly linked list.
+     * It traverses the list from the head and checks each node's value.
+     *
+     * @param value The integer value to search for in the linked list.
+     * @return true if the value is found, false otherwise.
+     */
+    public boolean searchSinglyLinkedList(int value) {
+       if (head != null) {
+          Node temp = head;
+
+          /**
+           * Loop through the linked list util 'temp' becomes to size (length of the list)
+           * or we have checked all with 'size' nodes.
+           * Using 'i < size' to found length of linked list traversal
+           * than relying solely on 'size' in case of list inconsistencies
+           */
+          for (int i = 0; i < size; i++) {
+              if (temp.value == value) {
+                  System.out.printf("Found the node at location : %d\n", i);
+              }
+              temp = temp.next;
+          }
+       } else {
+           System.out.println("Node not found!");
+       }
+       return false;
+    }
+
+    /**
+     * Deletes a node from the singly linked list at a specified location.
+     * Handles deletion from the beginning, end, and middle of the list.
+     *
+     * @param location the zero-based index (location) of the node to be deleted.
+     */
+    public void deletion(int location) {
+        // Case 1 : The linked list is empty because I needed to delete for first index node.
+        if (head == null) {
+           System.out.println("The Singly Linked List not exist.");
+           return;
+        }
+
+        // Case 2 : Deleting the head node (first node).
+        // This occurs when location is 0.
+        if (location == 0) {
+            // Move the head pointer to the next node.
+            // If there was only one node, head will become null.
+           head = head.next;
+           size--;
+
+           // If, after deletion, the list becomes empty, update the tail to null as well.
+           if (size == 0) {
+               tail = null;
+           }
+           System.out.println("Node at location " + location + " deleted successfully.");
+        }
+        /**
+         * Case 3 : Deletion the last node or a node beyond the current size.
+         * 'location >= size' effectively handles both deleting the last node
+         *
+         * (if location == size - 1 for 0-based indexing) or an invalid out-of-bounds location.
+         *
+         * For simplicity and common practice, it's often better to treat an out-of-bounds
+         * 'location' as an error or delete the last node if 'location >= size - 1'
+         * and handle out-of-bounds as an error or no-op.
+         */
+        // Changed condition to specifically target last node.
+        else if (location >= size) {
+            /**
+             * if location is precisely 'size - 1', we are deletion the actual last node.
+             * if 'location > size - 1', it's out of bounds and we can choose to delete the last or do nothing.
+             * for rebustness, let's assume 'location >= size - 1' means deleting the last node.
+             * */
+            Node temp = head;
+
+            /**
+             * Traverse to the second-to-last node.
+             * The loop runs 'size - 2' times to stop at the node before the tail.
+             * For a list with N nodes, the last node is at index N - 1.
+             * To delete the last node, we need to reach the node at index N - 2.
+             * */
+            for (int i = 0; i < size - 2; i++) {
+                temp = temp.next;
+            }
+
+            /**
+             * If 'temp' is the head, it means there was only one node before this deletion.
+             * (This specificcheck might be redundant if 'size == 1' is handled by location == 0)
+             * If size was 1, head = head.next (null), size--, tail = null already handled by location == 0.
+             * So, this 'if (temp == head)' block might not be necessary or indicates a logic flaw here.
+             * */
+            if (temp == head) {
+                tail = head = null;
+                size--;
+                return;
+            }
+
+            temp.next = null;
+            tail = temp;
+            size--;
+            System.out.println("Node at location " + location + " deleted successfully (or last node if out of bounds).");
+        // Case 4 : Deleting a node from the middle of the list.
+        } else {
+            Node temp = head;
+
+            // Traverse to the node before the node to be deleted.
+            for (int i = 0; i < location - 1; i++) {
+               temp = temp.next;
+            }
+
+            /**
+             * Link the current node's 'next' to the node after the one being deleted.
+             * This bypassed and effectively removes the node at 'location'.
+             * */
+            temp.next = temp.next.next;
+            size--;
+            System.out.println("Node at location " + location + " deleted successfully.");
+        }
+    }
+
+    /**
+     * Deletes the entire Singly Linked List.
+     * This operation sets both the head and tail pointers to null
+     * effectively making the list empty and allowing all nodes to be
+     * garbage collected (if no other references exist).
+     * */
+    public void deleteAll() {
+        /**
+         * Set the head to the list to be null, this removes the all reference to first node and, consequently
+         * To all subsequent nodes in the list.
+        */
+        head = null;
+
+        // this ensures consistency, as an empty list should not have a tail.
+        tail = null;
+
+        /**
+         * optionally, if you're tracking size, reset it to 0.
+         * public int size; assuming 'size' field exists in Singly Linked List class
+         * size = 0
+         * */
+
+        System.out.println("The Singly Linked List deleted successfully.");
     }
 
     /**
